@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocketServer</title>
+</head>
+<body>
+    <h1>Acceso Denegado</h1>
+    <!-- Se crea script con la importacion del archibo js de sockets -->
+    <!-- Cada refresh del navegador desconecta y vuelve a conectar al usuario, generando cada vez un id unico del dispositivo conectado -->
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        var socket = io(); //io() es parte del script anterior
+        socket.on('connect', function() { //(nombreevento, callback)
+            console.log('Conectado al servidor');
+        });
+        socket.on('disconnect', function() { //(nombreevento, callback)
+            console.log('Perdimos comunicación con el servidor');
+        });
+        socket.emit('mensaje', { nombre: 'Willy' }); //(nombreevento, payload) es para emitir
+        socket.on('mensaje', function( payload ) { //Escchando
+            //console.log('Escuchando ', payload);
+        });
+        socket.on('nuevo-mensaje', function( payload ) { //Escchando
+            console.log('Escuchando ', payload);
+        });
+        socket.on('active-bands', function( payload ) { //Escchando
+            console.clear();
+            console.log(payload);
+            console.table(payload);
+        });
+    </script>
+</body>
+</html>
